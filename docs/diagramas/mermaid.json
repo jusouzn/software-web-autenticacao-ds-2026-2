@@ -1,0 +1,3 @@
+{"theme":"neutral","themeVariables":{"fontFamily":"Arial, Liberation Sans","fontSize":"18px"},
+ "sequence":{"actorFontSize":18,"messageFontSize":18,"noteFontSize":16,"messageMargin":30},
+ "flowchart":{"htmlLabels":true}}

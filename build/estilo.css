@@ -1,0 +1,74 @@
+@page {
+  size: A4; margin: 3cm 2cm 2cm 3cm;
+  @top-right { content: "Domínios de Software 2026/2 – APS – Autenticação de Usuários"; font: 9pt Arial, "Liberation Sans"; color: #555; }
+  @bottom-right { content: counter(page); font: 10pt Arial, "Liberation Sans"; }
+}
+@page :first { @top-right { content: none; } @bottom-right { content: none; } }
+html { font-family: Arial, Arial, "Liberation Sans", sans-serif; font-size: 12pt; line-height: 1.5; color: #111; }
+body { margin: 0; counter-reset: figura tabela; hyphens: auto; }
+p, li { text-align: justify; margin: 0 0 0.45em 0; orphans: 3; widows: 3; }
+/* capa */
+.capa { page-break-after: always; height: 24.5cm; display: flex; flex-direction: column; justify-content: space-between; text-align: center; }
+.capa p { text-align: center; margin: 0.1em 0; }
+.capa .instituicao p { font-weight: bold; }
+.capa .rotulo { font-variant: small-caps; color: #444; margin-bottom: 0.4em; }
+.titulo-capa { font: bold 20pt Arial, "Liberation Sans"; margin: 0.4em 0; bookmark-level: none; }
+.subtitulo { font-style: italic; }
+/* títulos */
+h1, h2, h3 { font-family: Arial, "Liberation Sans", sans-serif; page-break-after: avoid; line-height: 1.25; text-align: left; }
+h1 { font-size: 15pt; margin: 1.2em 0 0.5em; text-transform: uppercase; }
+h2 { font-size: 13pt; margin: 1.1em 0 0.4em; }
+h3 { font-size: 12pt; margin: 0.9em 0 0.3em; }
+main > h1:first-child { margin-top: 0; }
+#sec-1, #sec-referencias, .apendices h1.apendice:first-child { page-break-before: always; }
+h1.apendice { text-transform: none; }
+/* sumário */
+.sumario { page-break-after: always; }
+.sumario h1 { bookmark-level: none; text-transform: uppercase; }
+.sumario ul { list-style: none; padding: 0; margin: 0; }
+.sumario li { text-align: left; margin: 0.15em 0; line-height: 1.3; }
+.sumario li a { color: #111; text-decoration: none; }
+.sumario li a::after { content: leader(".") target-counter(attr(href), page); }
+.sumario li.n1 { font-weight: bold; margin-top: 0.5em; }
+.sumario li.n2 { padding-left: 1.2em; }
+.sumario li.n3 { padding-left: 2.6em; font-size: 11pt; }
+/* links */
+a { color: #0b4f8a; text-decoration: none; }
+a.cit { color: #0b4f8a; }
+a.xfig::before { content: "Figura " target-counter(attr(href), figura); }
+a.xtbl::before { content: "Tabela " target-counter(attr(href), tabela); }
+/* bloco de item de informação */
+.meta { border-left: 3px solid #0b4f8a; background: #eef3f8; padding: 0.35em 0.7em; margin: 0.3em 0 0.8em; font: 9.5pt/1.35 Arial, "Liberation Sans"; page-break-inside: avoid; }
+.meta p { text-align: left; margin: 0; }
+/* figuras e tabelas */
+.figura { counter-increment: figura; margin: 0.8em 0; page-break-inside: avoid; text-align: center; }
+.tabela { counter-increment: tabela; margin: 0.8em 0; }
+.legenda { display: block; font: bold 10pt/1.3 Arial, "Liberation Sans"; text-align: center; }
+.figura .legenda::before { content: "Figura " counter(figura) " – "; }
+.tabela .legenda::before { content: "Tabela " counter(tabela) " – "; }
+.figura p, .tabela p { text-align: center; margin: 0.2em 0; }
+.fonte { display: block; font-size: 9.5pt; text-align: left; line-height: 1.3; }
+.figura img { width: 100%; max-height: 13cm; object-fit: contain; }
+.figura img.alta { max-height: 19cm; }
+.figura img.estreita { width: 60%; }
+.paisagem { page: paisagem; }
+.paisagem img { max-height: 13.5cm; }
+@page paisagem { size: A4 landscape; margin: 2.5cm 2cm 2cm 2.5cm; }
+.tabela > p:first-child { break-after: avoid; page-break-after: avoid; }
+.tabela > table { break-before: avoid; }
+table { width: 100%; border-collapse: collapse; font: 9.5pt/1.3 Arial, "Liberation Sans"; margin: 0.3em 0; }
+thead { display: table-header-group; }
+th { background: #dde6ef; text-align: left; }
+th, td { border: 0.5pt solid #8a99a8; padding: 3pt 4pt; vertical-align: top; text-align: left; }
+tr { page-break-inside: avoid; }
+td code, th code { font-size: 8.5pt; }
+/* código */
+code { font-family: "Liberation Mono", monospace; font-size: 9.5pt; }
+pre { font: 8.5pt/1.3 "Liberation Mono", monospace; background: #f5f5f5; border: 0.5pt solid #ccc; padding: 0.5em 0.7em; white-space: pre-wrap; page-break-inside: avoid; margin: 0.5em 0 0.7em; }
+ul { margin: 0.2em 0 0.5em; padding-left: 1.4em; }
+/* referências */
+.ref p { text-align: left; margin: 0 0 0.6em; line-height: 1.25; }
+/* apêndices */
+.prompt { border: 0.5pt solid #999; background: #fafafa; padding: 0.5em 0.8em; font-size: 11pt; }
+.prompt p, .prompt li { text-align: left; }
+.preencher { display: block; background: #fff3b0; border: 1pt dashed #c9a400; padding: 0.3em 0.5em; font: bold 10pt Arial, "Liberation Sans"; margin: 0.4em 0; }
