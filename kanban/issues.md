@@ -3,7 +3,7 @@
 Colunas sugeridas: **A fazer → Em autoria → Em revisão → Concluído**.
 
 | # | Título | Autor(a) | Revisor(a) |
-|---|---|---|---|---|
+|---|---|---|---|
 | 1 | IT-1.1 Visão geral e componentes do ambiente | Júlia | Kesley |
 | 2 | IT-1.2 Invocação dos servidores e inicialização | Kesley | Verônica | 
 | 3 | IT-1.3 Processamento de uma requisição Web | Verônica | Júlia |
