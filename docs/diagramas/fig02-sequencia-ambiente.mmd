@@ -1,0 +1,26 @@
+sequenceDiagram
+  autonumber
+  actor U as Usuário
+  participant B as Navegador
+  participant D as DNS
+  participant N as Nginx
+  participant A as Uvicorn + FastAPI
+  participant P as PostgreSQL
+  U->>B: digita https://auth.exemplo.com.br/
+  B->>D: consulta registro A/AAAA
+  D-->>B: endereço IP do servidor
+  B->>N: TCP SYN / SYN-ACK / ACK (porta 443)
+  B->>N: TLS 1.3 ClientHello / ServerHello + certificado
+  B->>N: GET / HTTP/1.1
+  N-->>B: 200 OK (login.html, servido do disco)
+  B->>N: GET /autenticacao.js, GET /estilos.css
+  N-->>B: 200 OK (recursos estáticos)
+  B-->>U: renderiza formulário de login
+  U->>B: preenche identificador e senha, clica em Entrar
+  B->>N: POST /api/v1/autenticacao (JSON)
+  N->>A: repassa requisição (proxy_pass)
+  A->>P: SELECT ... WHERE email = $1
+  P-->>A: linha do usuário (ou nenhuma)
+  A-->>N: 200 OK ou 401 (JSON)
+  N-->>B: resposta + cabeçalhos de segurança
+  B-->>U: exibe resultado (identidade ou erro)
