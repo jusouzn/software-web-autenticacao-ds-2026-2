@@ -7,5 +7,5 @@ tail -n +6 "$(dirname "$0")/issues.md" | grep '^| [0-9]' | while IFS='|' read -r
   gh issue create -R "$REPO" -t "$titulo" -b "Autoria: $autor
 Revisão: $revisor
 
-Critério de pronto: conteúdo verificado contra as referências citadas, revisão registrada em comentário no PR, build do PDF sem erros."
+Critério de pronto: conteúdo verificado contra as referências citadas, revisão registrada em comentário no PR."
 done

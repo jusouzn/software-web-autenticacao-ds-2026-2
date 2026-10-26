@@ -1,5 +1,3 @@
-build/APS.html
 __pycache__/
 *.pyc
 .venv/
-build/APS-gdocs.html

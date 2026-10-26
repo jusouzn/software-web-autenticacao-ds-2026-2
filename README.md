@@ -4,16 +4,13 @@ Equipe (ordem alfabética): Júlia de Souza Nascimento · Kesley Soares da Silva
 
 Projeto de um software Web que **recebe credenciais, verifica se correspondem a um usuário válido e retorna a identidade do usuário** (ou um erro de autenticação). Somente verificação de credenciais.
 
-## Gerar o PDF
+## Diagramas
 
-Cada item de informação começa com `@meta(IT-x.y, autor, revisor)`; o build gera a tabela artefato/autor/revisor, numera figuras e tabelas, cria o sumário navegável e **falha** se houver citação sem referência, âncora quebrada ou autor = revisor.
+As fontes dos diagramas ficam em `docs/diagramas/*.mmd` (Mermaid). Para gerar a imagem:
 
 ```bash
-sudo apt install pandoc            # ou equivalente
-pip install weasyprint pyyaml
-npm install -g @mermaid-js/mermaid-cli   # só se for alterar diagramas
-python3 build/build.py                  # --diagramas para re-renderizar os .mmd
-# saída: build/APS-Autenticacao-Web.pdf
+npm install -g @mermaid-js/mermaid-cli
+mmdc -c docs/diagramas/mermaid.json -i docs/diagramas/<diagrama>.mmd -o docs/img/<diagrama>.png
 ```
 
 ## Fluxo de trabalho sugerido

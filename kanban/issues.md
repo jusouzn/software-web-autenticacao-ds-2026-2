@@ -19,5 +19,5 @@ Colunas sugeridas: **A fazer → Em autoria → Em revisão → Concluído**.
 | 13 | IT-AI Apêndice I – prompts de IA | Júlia | Kesley |
 | 14 | IT-AII Apêndice II – plano e riscos | Verônica | Júlia | 
 | 15 | IT-AIII Apêndice III – registros de reuniões (preencher com dados reais) | Todos | Cruzada | 
-| 16 | Integração final, revisão de formatação e geração do PDF | Todos | — | 
+| 16 | Integração final e revisão de formatação do documento | Todos | — | 
 | 17 | (Fase 2) Implementação conforme Seção 2 | Todos | — | 
