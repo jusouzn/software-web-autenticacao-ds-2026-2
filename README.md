@@ -34,4 +34,4 @@ python3 build/build.py                  # --diagramas para re-renderizar os .mmd
 
 1. Uma *issue* por item de informação (ver `kanban/issues.md`), com responsável = autor(a).
 2. Uma *branch* por item → *pull request* → revisão pelo(a) revisor(a) indicado(a) (comentários no PR servem de evidência).
-3. Docente incluída como colaboradora do repositório (adriana.silveira.souza@gmail.com) e no Discord.
+3. Docente incluída como colaboradora do repositório (adriana.silveira.souza@gmail.com).
