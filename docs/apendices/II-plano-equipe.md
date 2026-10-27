@@ -1,4 +1,3 @@
-[Uploading II-plano-equipe.md…]()
 # Apêndice II – Plano de trabalho e gestão de riscos da equipe
 
 > **Item de informação IT-AII** · Autoria: Verônica Ribeiro Oliveira Palmeira · Revisão: Júlia de Souza Nascimento  
