@@ -1,0 +1,8 @@
+erDiagram
+  USUARIO {
+    uuid id PK "gen_random_uuid()"
+    varchar_50 login UK "NOT NULL, normalizado (sem espaços, minúsculas)"
+    varchar_254 email UK "NOT NULL, normalizado (sem espaços, minúsculas)"
+    varchar_120 nome "NOT NULL, não vazio"
+    varchar_255 hash_senha "NOT NULL, formato PHC Argon2id"
+  }
