@@ -3,7 +3,7 @@ flowchart TB
     direction LR
     U(["Usuário"]) --> B["Navegador Web<br/>motor HTML/CSS/JS, Fetch API, pilha TLS"]
   end
-  DNS[("Servidor DNS recursivo")]
+  DNS{{"Servidor DNS recursivo"}}
   subgraph SRV["Servidor: host Linux + Docker Engine (rede interna do Docker)"]
     subgraph C1["contêiner web – portas publicadas 80 e 443"]
       direction LR
