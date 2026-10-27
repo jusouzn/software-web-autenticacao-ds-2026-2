@@ -1,7 +1,6 @@
 # Apêndice II – Plano de trabalho e gestão de riscos da equipe
 
-> **Item de informação IT-AII** · Autoria: Verônica Ribeiro Oliveira Palmeira · Revisão: Júlia de Souza Nascimento  
-> Referências do item: — · Apoio de IA: [[ANTHROPIC, 2026](../referencias.md#ref-anthropic2026)]
+> **Item de informação IT-AII** · Autoria: Verônica Ribeiro Oliveira Palmeira · Revisão: Júlia de Souza Nascimento
 
 Este apêndice registra como a equipe organizou o trabalho segundo o princípio de "dividir e conquistar" do Apêndice C da definição da APS: o documento foi decomposto em itens de informação com fronteiras claras (Tabela 1), e a integração entre itens é garantida pelas revisões cruzadas e pelas referências internas entre seções.
 
