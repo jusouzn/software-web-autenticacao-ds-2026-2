@@ -9,8 +9,11 @@ sequenceDiagram
   U->>B: digita https://auth.exemplo.com.br/
   B->>D: consulta registro A/AAAA
   D-->>B: endereço IP do servidor
-  B->>N: TCP SYN / SYN-ACK / ACK (porta 443)
-  B->>N: TLS 1.3 ClientHello / ServerHello + certificado
+  B->>N: TCP SYN (porta 443)
+  N-->>B: TCP SYN-ACK
+  B->>N: TCP ACK
+  B->>N: TLS 1.3 ClientHello
+  N-->>B: TLS 1.3 ServerHello + certificado
   B->>N: GET / HTTP/1.1
   N-->>B: 200 OK (login.html, servido do disco)
   B->>N: GET /autenticacao.js, GET /estilos.css
