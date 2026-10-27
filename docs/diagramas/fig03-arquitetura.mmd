@@ -1,0 +1,31 @@
+flowchart TB
+  subgraph APRES["Camada de Apresentação – navegador"]
+    direction LR
+    V["TelaLogin<br/>login.html + estilos.css"] <--> CA["ClienteAutenticacao<br/>autenticacao.js"]
+  end
+  subgraph BORDA["Borda – Nginx"]
+    RP["Proxy reverso + TLS + limite de taxa + cabeçalhos de segurança"]
+  end
+  subgraph API["Camada de Interface (API) – Uvicorn + FastAPI"]
+    direction LR
+    RT["RotaAutenticacao"] ~~~ TE["TratadorErros"] ~~~ DTO["DTOs: RequisicaoAutenticacao,<br/>RespostaAutenticacao, ProblemaHTTP"]
+  end
+  subgraph SERV["Camada de Serviço (Domínio)"]
+    direction LR
+    SA["ServicoAutenticacao"] ~~~ US["Usuario, IdentidadeUsuario,<br/>FalhaAutenticacao"]
+    IR{{"«interface» RepositorioUsuario"}}
+    IV{{"«interface» VerificadorSenha"}}
+  end
+  subgraph INFRA["Camada de Infraestrutura"]
+    direction LR
+    RPG["RepositorioUsuarioPostgres"] ~~~ VA["VerificadorSenhaArgon2"] ~~~ CF["Configuracao"]
+  end
+  DB[("PostgreSQL – tabela usuario")]
+  CA -- "HTTPS / JSON" --> RP
+  RP -- "HTTP /api/*" --> RT
+  RT -- "chama" --> SA
+  SA -- "usa" --> IR
+  SA -- "usa" --> IV
+  IR -. "realizada por" .- RPG
+  IV -. "realizada por" .- VA
+  RPG -- "SQL parametrizado" --> DB
