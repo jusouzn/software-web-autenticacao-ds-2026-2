@@ -1,0 +1,17 @@
+flowchart TD
+  I([Requisição recebida]) --> A{Corpo JSON válido?<br/>identificador e senha<br/>presentes e no tamanho}
+  A -- não --> E400[/400 Requisição inválida/]
+  A -- sim --> N[Normalizar identificador<br/>trim + minúsculas]
+  N --> T{Contém '@'?}
+  T -- sim --> BE[Buscar por e-mail]
+  T -- não --> BL[Buscar por login]
+  BE --> X{Usuário existe?}
+  BL --> X
+  X -- não --> F[Verificar senha contra<br/>hash fictício<br/>tempo equivalente]
+  F --> E401[/401 Não autenticado/]
+  X -- sim --> H{Argon2id: senha<br/>confere com hash?}
+  H -- não --> E401
+  H -- sim --> OK[/200 Autenticado +<br/>IdentidadeUsuario/]
+  E400 --> Z([Fim])
+  E401 --> Z
+  OK --> Z
