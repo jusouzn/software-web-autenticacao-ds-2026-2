@@ -9,30 +9,34 @@ sequenceDiagram
   participant T as TratadorErros
   C->>N: POST /api/v1/autenticacao {identificador, senha}
   N->>N: verifica limite de taxa (limit_req)
-  N->>R: proxy_pass
-  R->>R: valida corpo (RequisicaoAutenticacao)
-  R->>S: autenticar(identificador, senha)
-  S->>S: normalizar(identificador)
-  alt identificador contém "@"
-    S->>RP: buscar_por_email(email)
-  else
-    S->>RP: buscar_por_login(login)
-  end
-  RP-->>S: Usuario ou None
-  alt usuário inexistente
-    S->>V: verificar_ficticio(senha)
-    S-->>R: lança FalhaAutenticacao
-    R->>T: exceção propagada
-    T-->>C: 401 application/problem+json
-  else usuário encontrado
-    S->>V: verificar(senha, hash_senha)
-    V-->>S: true / false
-    alt senha confere
-      S-->>R: IdentidadeUsuario
-      R-->>C: 200 application/json {autenticado: true, usuario}
-    else senha não confere
+  alt limite de requisições excedido
+    N-->>C: resposta de limite excedido
+  else dentro do limite
+    N->>R: proxy_pass
+    R->>R: valida corpo (RequisicaoAutenticacao)
+    R->>S: autenticar(identificador, senha)
+    S->>S: normalizar(identificador)
+    alt identificador contém "@"
+      S->>RP: buscar_por_email(email)
+    else
+      S->>RP: buscar_por_login(login)
+    end
+    RP-->>S: Usuario ou None
+    alt usuário inexistente
+      S->>V: verificar_ficticio(senha)
       S-->>R: lança FalhaAutenticacao
       R->>T: exceção propagada
       T-->>C: 401 application/problem+json
+    else usuário encontrado
+      S->>V: verificar(senha, hash_senha)
+      V-->>S: true / false
+      alt senha confere
+        S-->>R: IdentidadeUsuario
+        R-->>C: 200 application/json {autenticado: true, usuario}
+      else senha não confere
+        S-->>R: lança FalhaAutenticacao
+        R->>T: exceção propagada
+        T-->>C: 401 application/problem+json
+      end
     end
   end
