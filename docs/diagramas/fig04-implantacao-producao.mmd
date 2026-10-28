@@ -1,0 +1,28 @@
+flowchart TB
+  subgraph CLI["Máquina do usuário (Internet)"]
+    direction LR
+    U(["Usuário"]) --> B["Navegador Web"]
+  end
+  DNS{{"DNS público<br/>registro A/AAAA de auth.exemplo.com.br"}}
+  CA{{"Autoridade certificadora<br/>Let's Encrypt (ACME)"}}
+  subgraph VPS["VPS ou instância de nuvem – firewall libera somente TCP 80 e 443"]
+    subgraph C1["contêiner web – portas publicadas 80 e 443"]
+      NG["Nginx<br/>TLS com certificado da CA, HSTS, CSP, limite de taxa"]
+    end
+    subgraph C2["contêiner app – sem porta pública"]
+      UV["Uvicorn + FastAPI"]
+    end
+    subgraph C3["contêiner db – sem porta pública"]
+      PG[("PostgreSQL 16<br/>volume com backup")]
+    end
+    SEG[/"Segredos em variáveis de ambiente<br/>ou cofre de segredos"/]
+  end
+  LOG[("Logs centralizados<br/>alertas de 5xx e picos de 401/429")]
+  B -- "1. consulta DNS" --> DNS
+  B -- "2. HTTPS (TLS 1.3)" --> NG
+  NG -- "3. HTTP – somente /api/*" --> UV
+  UV -- "4. SQL parametrizado" --> PG
+  CA -. "emissão e renovação automática" .-> NG
+  SEG -. "injetados na inicialização" .-> UV
+  NG -. "logs de acesso" .-> LOG
+  UV -. "logs da aplicação" .-> LOG
