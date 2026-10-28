@@ -1,0 +1,95 @@
+classDiagram
+  direction TB
+  class RequisicaoAutenticacao {
+    +identificador: str
+    +senha: SecretStr
+  }
+  class RespostaAutenticacao {
+    +autenticado: bool
+    +usuario: IdentidadeUsuario
+  }
+  class ProblemaHTTP {
+    +type: str
+    +title: str
+    +status: int
+    +detail: str
+  }
+  class RotaAutenticacao {
+    +autenticar(req: RequisicaoAutenticacao) RespostaAutenticacao
+  }
+  class TratadorErros {
+    +tratar_falha_autenticacao(exc) JSONResponse
+    +tratar_validacao(exc) JSONResponse
+    +tratar_excecao_http(exc) JSONResponse
+    +tratar_indisponibilidade(exc) JSONResponse
+    +tratar_erro_interno(exc) JSONResponse
+  }
+  class MiddlewareTipoConteudo {
+    +validar(requisicao) None
+  }
+  class ServicoAutenticacao {
+    -repositorio: RepositorioUsuario
+    -verificador: VerificadorSenha
+    +autenticar(identificador: str, senha: str) IdentidadeUsuario
+    -normalizar(identificador: str) str
+  }
+  class Usuario {
+    +id: UUID
+    +login: str
+    +email: str
+    +nome: str
+    +hash_senha: str
+    +identidade() IdentidadeUsuario
+  }
+  class IdentidadeUsuario {
+    +id: UUID
+    +login: str
+    +email: str
+    +nome: str
+  }
+  note for IdentidadeUsuario "Tipo de retorno da camada de servico"
+  class FalhaAutenticacao
+  class RepositorioUsuario {
+    <<interface>>
+    +buscar_por_login(login: str) Usuario | None
+    +buscar_por_email(email: str) Usuario | None
+  }
+  class VerificadorSenha {
+    <<interface>>
+    +verificar(senha: str, hash_senha: str) bool
+    +verificar_ficticio(senha: str) None
+  }
+  class RepositorioUsuarioPostgres {
+    -pool: ConnectionPool
+    +buscar_por_login(login: str) Usuario | None
+    +buscar_por_email(email: str) Usuario | None
+  }
+  class VerificadorSenhaArgon2 {
+    -hasher: PasswordHasher
+    -hash_ficticio: str
+    +verificar(senha: str, hash_senha: str) bool
+    +verificar_ficticio(senha: str) None
+  }
+  class Configuracao {
+    +database_url: str
+    +argon2_memoria_kib: int
+    +argon2_iteracoes: int
+    +argon2_paralelismo: int
+  }
+  RotaAutenticacao ..> RequisicaoAutenticacao
+  RotaAutenticacao ..> RespostaAutenticacao
+  RotaAutenticacao --> ServicoAutenticacao
+  TratadorErros ..> ProblemaHTTP
+  TratadorErros ..> FalhaAutenticacao
+  MiddlewareTipoConteudo ..> TratadorErros : gera erro 415
+  ServicoAutenticacao --> RepositorioUsuario
+  ServicoAutenticacao --> VerificadorSenha
+  ServicoAutenticacao ..> FalhaAutenticacao : lança
+  ServicoAutenticacao ..> IdentidadeUsuario : retorna
+  RepositorioUsuario ..> Usuario
+  Usuario ..> IdentidadeUsuario
+  RepositorioUsuarioPostgres ..|> RepositorioUsuario
+  VerificadorSenhaArgon2 ..|> VerificadorSenha
+  RepositorioUsuarioPostgres ..> Configuracao
+  VerificadorSenhaArgon2 ..> Configuracao
+  RespostaAutenticacao ..> IdentidadeUsuario : reaproveita
